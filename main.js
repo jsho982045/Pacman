@@ -140,31 +140,63 @@ let update = () => {
     }
 };
 
+let remainingDots = 0;
+
 let drawFoods = () => {
+    remainingDots = 0;
     for (let i = 0; i < map.length; i++) {
         for (let j = 0; j < map[0].length; j++) {
-            if (map[i][j] == 2) {
+            if (map[i][j] == 2 || map[i][j] == 4) {
+                remainingDots++;
+                let color = map[i][j] == 2 ? "yellow" : "white";
+                let size = map[i][j] == 2 ? oneBlockSize / 5 : oneBlockSize / 2;
                 // Normal dot
                 createRect(
                     j * oneBlockSize + oneBlockSize / 2.5,
                     i * oneBlockSize + oneBlockSize / 2.5,
-                    oneBlockSize / 5,
-                    oneBlockSize / 5,
-                    "yellow"
-                );
-    
-            } else if (map[i][j] == 4) {
-                // Power Pellet
-                createRect(
-                    j * oneBlockSize + oneBlockSize / 4,
-                    i * oneBlockSize + oneBlockSize / 4,
-                    oneBlockSize / 2,
-                    oneBlockSize / 2,
-                    "white" // Choose a distinct color
+                    size,
+                    size, 
+                    color
                 );
             }
         }
     }
+    if (remainingDots == 0) {
+        displayWinnerMessage();
+    }
+};
+
+let displayWinnerMessage = () => {
+    clearInterval(gameInterval); // Stop the game loop
+    
+    // Draw a semi-transparent background rectangle
+    canvasContext.fillStyle = "rgba(0, 0, 0, 0.5)"; // Semi-transparent black
+    canvasContext.fillRect(0, canvas.height / 4, canvas.width, canvas.height / 2);
+    
+    // Set the text style
+    canvasContext.font = "bold 48px Emulogic";
+    canvasContext.fillStyle = "green";
+    canvasContext.textAlign = "center"; // Center the text horizontally
+    canvasContext.textBaseline = "middle"; // Center the text vertically
+    
+    // Optional: Text shadow or stroke
+    canvasContext.shadowColor = "yellow";
+    canvasContext.shadowBlur = 7;
+    canvasContext.strokeStyle = "yellow";
+    canvasContext.lineWidth = 3;
+    
+    // Position the text in the middle of the canvas
+    let centerX = canvas.width / 2;
+    let centerY = canvas.height / 2;
+    
+    // Optional: Stroke text for better visibility
+    canvasContext.strokeText("WINNER!", centerX, centerY);
+    
+    // Fill the text
+    canvasContext.fillText("WINNER!", centerX, centerY);
+    
+    // Optional: Remove text shadow if you don't want it to affect other drawings
+    canvasContext.shadowColor = "transparent";
 };
 
 
@@ -311,4 +343,3 @@ let triggerGhostVulnerableState = () => {
         }, 10000); // Vulnerable for 10 seconds
     });
 };
-
