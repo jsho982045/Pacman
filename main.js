@@ -111,21 +111,20 @@ let gameOver = () => {
 };
 
 let startGame = () => {
+    clearInterval(gameInterval);
     document.getElementById("game-over-screen").style.display = "none";
+    score = 0;
+    lives = 3;
     createNewPacman();
     createGhosts();
-
+    gameInterval = setInterval(gameLoop, 1000 / fps);
 };
 
 document.addEventListener('DOMContentLoaded', (event) => {
     startGame();
 });
 
-document.getElementById("restart-button").addEventListener("click", () => {
-    lives = 3;
-    score = 0;
-    startGame();
-});
+document.getElementById("restart-button").addEventListener("click", startGame);
 
 document.getElementById("exit-button").addEventListener("click", () => {
     window.close();
@@ -284,9 +283,7 @@ let createGhosts = () => {
     }
 };
 
-createNewPacman();
-createGhosts();
-gameLoop();
+
 
 window.addEventListener("keydown", (event) => {
     let k = event.keyCode;
@@ -314,3 +311,4 @@ let triggerGhostVulnerableState = () => {
         }, 10000); // Vulnerable for 10 seconds
     });
 };
+
