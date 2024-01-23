@@ -70,11 +70,6 @@ let randomTargetsForGhosts = [
     },
 ];
 
-// for (let i = 0; i < map.length; i++) {
-//     for (let j = 0; j < map[0].length; j++) {
-//         map[i][j] = 2;
-//     }
-// }
 
 let createNewPacman = () => {
     pacman = new Pacman(
@@ -101,9 +96,41 @@ let restartPacmanAndGhosts = () => {
 let onGhostCollision = () => {
     lives--;
     restartPacmanAndGhosts();
-    if (lives == 0) {
+    if (lives <= 0) {
+        gameOver();
+    }else{
+        restartPacmanAndGhosts();
     }
 };
+
+let gameOver = () => {
+    clearInterval(gameInterval);
+    setTimeout(() => {
+        document.getElementById("game-over-screen").style.display = "flex";
+    }, 100);
+};
+
+let startGame = () => {
+    document.getElementById("game-over-screen").style.display = "none";
+    createNewPacman();
+    createGhosts();
+
+};
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    startGame();
+});
+
+document.getElementById("restart-button").addEventListener("click", () => {
+    lives = 3;
+    score = 0;
+    startGame();
+});
+
+document.getElementById("exit-button").addEventListener("click", () => {
+    window.close();
+});
+
 
 let update = () => {
     pacman.moveProcess();
@@ -263,18 +290,17 @@ gameLoop();
 
 window.addEventListener("keydown", (event) => {
     let k = event.keyCode;
+    if ([37, 38 ,39, 40].indexOf(k) > -1) {
+        event.preventDefault();
+    }
     setTimeout(() => {
         if (k == 37 || k == 65) {
-            // left arrow or a
             pacman.nextDirection = DIRECTION_LEFT;
         } else if (k == 38 || k == 87) {
-            // up arrow or w
             pacman.nextDirection = DIRECTION_UP;
         } else if (k == 39 || k == 68) {
-            // right arrow or d
             pacman.nextDirection = DIRECTION_RIGHT;
         } else if (k == 40 || k == 83) {
-            // bottom arrow or s
             pacman.nextDirection = DIRECTION_BOTTOM;
         }
     }, 1);

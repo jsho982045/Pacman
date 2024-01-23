@@ -51,12 +51,14 @@ class Pacman {
         switch (this.direction) {
             case DIRECTION_RIGHT: // Right
                 this.x -= this.speed;
+                if (this.x < 0) this.x = canvas.width;
                 break;
             case DIRECTION_UP: // Up
                 this.y += this.speed;
                 break;
             case DIRECTION_LEFT: // Left
                 this.x += this.speed;
+                if (this.x > canvas.width) this.x = 0;
                 break;
             case DIRECTION_BOTTOM: // Bottom
                 this.y -= this.speed;
@@ -66,20 +68,23 @@ class Pacman {
 
     moveForwards() {
         switch (this.direction) {
-            case DIRECTION_RIGHT: // Right
+            case DIRECTION_RIGHT:
                 this.x += this.speed;
+                if (this.x >= canvas.width) this.x = 0;
                 break;
-            case DIRECTION_UP: // Up
+            case DIRECTION_UP: 
                 this.y -= this.speed;
                 break;
-            case DIRECTION_LEFT: // Left
+            case DIRECTION_LEFT: 
                 this.x -= this.speed;
+                if (this.x < 0) this.x = canvas.width - oneBlockSize;
                 break;
-            case DIRECTION_BOTTOM: // Bottom
+            case DIRECTION_BOTTOM:
                 this.y += this.speed;
                 break;
         }
     }
+
 
     checkCollisions() {
         let isCollided = false;
@@ -190,4 +195,18 @@ class Pacman {
         );
         canvasContext.restore();
     }
+
+    checkWinCondition() {
+        for (let i = 0; i < map.length; i++) {
+            for (let j = 0; j < map[0].length; j++){
+                if (map[i][j] == 2){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
+
+
+
