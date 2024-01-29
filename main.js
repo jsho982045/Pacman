@@ -31,9 +31,6 @@ let wallSpaceWidth = oneBlockSize / 1.6;
 let wallOffset = (oneBlockSize - wallSpaceWidth) / 2;
 let wallInnerColor = "black";
 
-// we now create the map of the walls,
-// if 1 wall, if 0 not wall
-// 21 columns // 23 rows
 let map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
@@ -179,23 +176,18 @@ let displayWinnerMessage = () => {
     canvasContext.textAlign = "center"; // Center the text horizontally
     canvasContext.textBaseline = "middle"; // Center the text vertically
     
-    // Optional: Text shadow or stroke
     canvasContext.shadowColor = "yellow";
     canvasContext.shadowBlur = 7;
     canvasContext.strokeStyle = "yellow";
     canvasContext.lineWidth = 3;
     
-    // Position the text in the middle of the canvas
     let centerX = canvas.width / 2;
     let centerY = canvas.height / 2;
     
-    // Optional: Stroke text for better visibility
     canvasContext.strokeText("WINNER!", centerX, centerY);
     
-    // Fill the text
     canvasContext.fillText("WINNER!", centerX, centerY);
     
-    // Optional: Remove text shadow if you don't want it to affect other drawings
     canvasContext.shadowColor = "transparent";
 };
 
