@@ -79,8 +79,10 @@ let createNewPacman = () => {
 };
 
 let gameLoop = () => {
-    update();
-    draw();
+    if(!isPaused){
+        update();
+        draw();
+    }
 };
 
 let gameInterval = setInterval(gameLoop, 1000 / fps);
@@ -99,6 +101,37 @@ let onGhostCollision = () => {
         restartPacmanAndGhosts();
     }
 };
+
+let isPaused = false;
+
+function togglePause() {
+    if (isPaused) {
+        resumeGame();
+    } else {
+        pauseGame();
+    }
+}
+
+function pauseGame() {
+    clearInterval(gameInterval);
+    isPaused = true;
+    document.getElementById("pause-button").textContent = "▶";
+}
+
+function resumeGame() {
+    if (!isPaused) return;
+    gameInterval = setInterval(gameLoop, 1000 / fps);
+    isPaused = false;
+    document.getElementById("pause-button").textContent = "⏸";
+}
+
+document.getElementById("pause-button").addEventListener("click", () => {
+    if (isPaused) {
+        resumeGame();
+    } else {
+        pauseGame();
+    }
+});
 
 let gameOver = () => {
     clearInterval(gameInterval);
