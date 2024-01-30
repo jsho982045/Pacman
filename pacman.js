@@ -31,8 +31,9 @@ class Pacman {
                     this.getMapX() == j &&
                     this.getMapY() == i
                 ) {
+                    playPelletSound();
                     map[i][j] = 3;
-                    score++;
+                    score++;    
                 } else if (
                     map[i][j] == 4 &&
                     this.getMapX() == j &&
@@ -116,6 +117,7 @@ class Pacman {
             ) { 
                 if(ghost.isVulnerable && !ghost.isEaten) {
                     score += 10;
+                    eatGhostSound.play();
                     ghost.isEaten = true;
                     setTimeout(() => {
                         ghost.isEaten = false;

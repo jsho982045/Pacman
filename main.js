@@ -3,6 +3,9 @@ const canvasContext = canvas.getContext("2d");
 const pacmanFrames = document.getElementById("animation");
 const ghostFrames = document.getElementById("ghosts");
 
+const pelletSound = new Audio("pacman_chomp.wav");
+const eatGhostSound = new Audio("pacman_eatghost.wav");
+
 let createRect = (x, y, width, height, color) => {
     canvasContext.fillStyle = color;
     canvasContext.fillRect(x, y, width, height);
@@ -110,6 +113,10 @@ function togglePause() {
     } else {
         pauseGame();
     }
+}
+
+function playPelletSound() {
+    pelletSound.play();
 }
 
 function pauseGame() {
