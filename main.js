@@ -140,6 +140,13 @@ document.getElementById("pause-button").addEventListener("click", () => {
     }
 });
 
+document.getElementById("start-button").addEventListener("click", function() {
+    document.getElementById("intro-screen").style.display = "none";
+    document.getElementById("game-container").style.display = "block";
+    document.getElementById("intro-song").play();
+    startGame();
+});
+
 let gameOver = () => {
     clearInterval(gameInterval);
     setTimeout(() => {
